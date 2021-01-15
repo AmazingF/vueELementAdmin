@@ -1,11 +1,16 @@
 import request from '@/utils/request'
+import Qs from 'qs';
 
 export function login(data) {
-  return request({
-    url: '/vue-admin-template/user/login',
+  let a = request({
+    url: '/login',
     method: 'post',
-    data
+    data: Qs.stringify(data),
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
   })
+  return a
 }
 
 export function getInfo(token) {

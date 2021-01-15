@@ -26,14 +26,26 @@ const mutations = {
     state.avatar = avatar
   }
 }
+/*
+    curl -XPOST  http://127.0.0.1:9093/api/v1/user/login 
+    {"code":200,"status":"success","data":{"token":"test-token"}}
 
+    curl -XPOST  http://127.0.0.1:9093/api/v1/user/info?token=xxx 
+    {"code":200,"status":"success","data":{"roles":"Admin"}}
+
+    curl -XPOST  http://127.0.0.1:9093/api/v1/user/logout
+    {"code":200,"status":"success","data":"sucess"}
+*/
 const actions = {
   // user login
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
+        // const data = response
+        // {"code":200,"status":"success","data":{"token":"test-token"}}
+        response.data= {token: Math.random()*10};
+        console.log(response)
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
